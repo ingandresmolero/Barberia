@@ -18,6 +18,8 @@ $(document).ready(function(){
     var busqueda = $("#busqueda");
     // //Agregar Usuario
     var add_user = $("#add_user");
+    //Agregar Barbero
+    var add_barber = $("#add_barber");
 
     // let n = $('.user-name #rol').text();
 
@@ -30,7 +32,7 @@ $(document).ready(function(){
     reporte.addClass(' hidden');
     busqueda.addClass(' hidden');
     add_user.addClass(' hidden');
-
+    add_barber.addClass(' hidden');
   
    }
    

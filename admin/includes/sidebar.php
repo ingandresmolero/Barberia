@@ -91,6 +91,14 @@
             <a href="add-user.php" class="chart-nav"><i class="fa fa-user nav_icon"></i>8. Agregar Usuario</a>
           </li>
 
+          <li id="add_barber">
+            <a href="add-barber.php" class="chart-nav"><i class="fa fa-user nav_icon"></i>9. Agregar Barbero</a>
+          </li>
+
+          <li id="add_barber">
+            <a href="barber-list.php" class="chart-nav"><i class="fa fa-user nav_icon"></i>9. Lista Barberos</a>
+          </li>
+
 
         </ul>
         <div class="clearfix"> </div>

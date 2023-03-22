@@ -1,20 +1,33 @@
 <?php
 session_start();
 error_reporting(0);
-$id=$_SESSION['bpmsaid'];
-
 include('includes/dbconnection.php');
 if (strlen($_SESSION['bpmsaid']==0)) {
   header('location:logout.php');
   } else{
+	$uid=$_GET['idbarber'];
+	$consulta=mysqli_query($con, "SELECT * FROM tblbarber WHERE idbarber='$uid'");
+	$list=mysqli_fetch_array($consulta);
+if(isset($_POST['delete'])){
+
+$assignedUserID = $_SESSION['bpmsaid'];
+
+$ret=mysqli_query($con,"DELETE FROM tblbarber WHERE  idbarber='$uid'");
 
 
 
-?>
+echo '<script>alert("Usuario Eliminado ")</script>';
+echo "<script>window.location.href ='barber-list.php'</script>";
+
+}
+ 
+
+
+  ?>
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Activo | Lista de Clientes</title>
+<title>Activo | Elimar Barbero</title>
 <link rel="shortcut icon" href="../admin/images/icono.ico">
 
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -57,58 +70,35 @@ if (strlen($_SESSION['bpmsaid']==0)) {
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="tables">
-					<h3 class="title1">Lista de Clientes</h3>
+					<h3 class="title1">Esta seguro que desea eliminar a "<?php echo $list['nombre'];  ?>"?</h3>
 					
-					
-				
 					<div class="table-responsive bs-example widget-shadow">
-						<h4>Lista de Clientes:</h4>
-						<table class="table table-bordered"> <thead> <tr> <th>#</th> <th>Nombre de Cliente</th> <th>Barbero</th> <th>Fecha de Creación</th><th>Usuario</th><th>Acción</th> </tr> </thead> <tbody>
-<?php
-if($rol=='admin'){
-	$ret=mysqli_query($con,"select tblcustomers.ID,tblcustomers.assignedbarber as barbero, tbladmin.AdminName as usuario ,tblcustomers.Name as nombre, tblcustomers.MobileNumber as telefono ,tblcustomers.CreationDate as fechacrea, tblcustomers.ID as idclien  from  tblcustomers inner join tbladmin on tblcustomers.assignedBy=tbladmin.ID  ");
-	$cnt=1;
+						
 
+						
+<form method="post">
 
-while ($row=mysqli_fetch_array($ret)) {
+<tr>
+<td colspan="4" align="center">
+<a href="barber-list.php">Volver</a>	
+</td>
 
-?>
+</tr>
+<tr>
+<td colspan="4" align="center">
+<button type="submit" name="delete" class="btn btn-default">Borrar</button>		
+</td>
 
-								<tr> <th scope="row"><?php echo $cnt;?></th> 
-								 <td><?php  echo $row['nombre'];?></td> 
-								 <td><?php  echo $row['barbero'];?></td>
-								 <td><?php  echo $row['fechacrea'];?></td> 
-								 <td><?php  echo $row['usuario'];?></td> 
-								 <td><a href="edit-customer-detailed.php?editid=<?php echo $row['idclien'];?>" class="button">Editar</a>  ||  <a href="add-customer-services.php?addid=<?php echo $row['ID'];?>" class="button">Asignar Servicio</a></td> </tr>   <?php
-$cnt=$cnt+1;
-}}else{
-	if($rol!='admin'){
-		$ret2=mysqli_query($con,"select tblcustomers.ID,tblcustomers.assignedbarber as barbero, tbladmin.AdminName as usuario ,tblcustomers.Name as nombre, tblcustomers.MobileNumber as telefono ,tblcustomers.CreationDate as fechacrea, tblcustomers.ID as idclien  from  tblcustomers inner join tbladmin on tblcustomers.assignedBy=tbladmin.ID where tblcustomers.assignedBy='$id'");
-	$cnt2=1;
-
-	while ($row2=mysqli_fetch_array($ret2)) {
-
-		?>
-		
-								 <tr> <th scope="row2"><?php echo $cnt2;?></th> 
-								 <td><?php  echo $row2['nombre'];?></td> 
-								 <td><?php  echo $row2['barbero'];?></td>
-								 <td><?php  echo $row2['fechacrea'];?></td> 
-								 <td><?php  echo $row2['usuario'];?></td> 
-								 <td><a href="edit-customer-detailed.php?editid=<?php echo $row2['idclien'];?>" class="button">Editar</a>  ||  <a href="add-customer-services.php?addid=<?php echo $row2['ID'];?>" class="button">Asignar Servicio</a></td> </tr>   <?php 
-		$cnt2=$cnt2+1;
-		}
-	}
-}
-
-?></tbody> </table> 
+</tr>
+						
+</form>
 					</div>
 				</div>
 			</div>
-			<!--footer-->
-			 <?php include_once('includes/footer.php');?>
-			<!--//footer-->
 		</div>
+		<!--footer-->
+		 <?php include_once('includes/footer.php');?>
+        <!--//footer-->
 	</div>
 	<!-- Classie -->
 		<script src="js/classie.js"></script>

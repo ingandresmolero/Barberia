@@ -63,10 +63,11 @@ if (strlen($_SESSION['bpmsaid']==0)) {
 				
 					<div class="table-responsive bs-example widget-shadow">
 						<h4>Lista de Clientes:</h4>
-						<table class="table table-bordered"> <thead> <tr> <th>#</th> <th>Nombre de Cliente</th> <th>Barbero</th> <th>Fecha de Creación</th><th>Usuario</th><th>Acción</th> </tr> </thead> <tbody>
+						<table class="table table-bordered"> <thead> <tr> <th>#</th> <th>idbarbero</th>  <th>Barbero</th> <th>Usuario</th><th>Acción</th> </tr> </thead> <tbody>
 <?php
 if($rol=='admin'){
-	$ret=mysqli_query($con,"select tblcustomers.ID,tblcustomers.assignedbarber as barbero, tbladmin.AdminName as usuario ,tblcustomers.Name as nombre, tblcustomers.MobileNumber as telefono ,tblcustomers.CreationDate as fechacrea, tblcustomers.ID as idclien  from  tblcustomers inner join tbladmin on tblcustomers.assignedBy=tbladmin.ID  ");
+	$ret=mysqli_query($con,"select idbarber,nombre, usuario from tblbarber");
+	// $ret=mysqli_query($con,"select tblcustomers.ID,tblcustomers.assignedbarber as barbero, tbladmin.AdminName as usuario ,tblcustomers.Name as nombre, tblcustomers.MobileNumber as telefono ,tblcustomers.CreationDate as fechacrea, tblcustomers.ID as idclien  from  tblcustomers inner join tbladmin on tblcustomers.assignedBy=tbladmin.ID  ");
 	$cnt=1;
 
 
@@ -75,11 +76,10 @@ while ($row=mysqli_fetch_array($ret)) {
 ?>
 
 								<tr> <th scope="row"><?php echo $cnt;?></th> 
+								<td><?php  echo $row['idbarber'];?></td> 
 								 <td><?php  echo $row['nombre'];?></td> 
-								 <td><?php  echo $row['barbero'];?></td>
-								 <td><?php  echo $row['fechacrea'];?></td> 
-								 <td><?php  echo $row['usuario'];?></td> 
-								 <td><a href="edit-customer-detailed.php?editid=<?php echo $row['idclien'];?>" class="button">Editar</a>  ||  <a href="add-customer-services.php?addid=<?php echo $row['ID'];?>" class="button">Asignar Servicio</a></td> </tr>   <?php
+								 <td><?php  echo $row['usuario'];?></td>
+								 <td><a href="edit-customer-detailed.php?editid=<?php echo $row['idclien'];?>" class="button">Editar</a>  ||  <a href="delete-barber.php?idbarber=<?php echo $row['idbarber'];?>" class="button">Eliminar</a></td> </tr>   <?php
 $cnt=$cnt+1;
 }}else{
 	if($rol!='admin'){
